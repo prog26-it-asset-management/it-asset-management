@@ -15,7 +15,8 @@ public class AssetDialog(IAssetService assetService) : IAssetDialog
             Console.WriteLine("1. Add Asset");
             Console.WriteLine("2. View All Assets");
             Console.WriteLine("3. Remove Asset");
-            Console.WriteLine("4. Go back to main menu");
+            Console.WriteLine("4. Change Status");
+            Console.WriteLine("5. Go back to main menu");
 
             ConsoleKey input = Console.ReadKey(true).Key;
 
@@ -33,19 +34,21 @@ public class AssetDialog(IAssetService assetService) : IAssetDialog
                     ShowRemoveAssetDialog();
                     break;
                 case ConsoleKey.D4:
+                    ShowChangeStatusDialog();
+                    break;
+                case ConsoleKey.D5:
                     isRunning = false;
                     break;
                 default:
                     break;
             }
-
         }
     }
     private void ShowAddAssetDialog()
     {
         Console.Clear();
         Console.WriteLine("*** Add Asset ***");
-        Console.Write("Input Asset Name:");
+        Console.Write("Input Asset Name: ");
         var assetName = Console.ReadLine();
 
         var request = new AddAssetRequest(assetName!);
@@ -87,7 +90,7 @@ public class AssetDialog(IAssetService assetService) : IAssetDialog
         foreach (var asset in response.Assets)
         {
             if (asset == null) continue;
-            Console.WriteLine($"Asset ID: {asset.SerialNumber}, Asset Name: {asset.AssetName}, Current status {asset.Status}");
+            Console.WriteLine($"Asset ID: {asset.SerialNumber}, Asset Name: {asset.AssetName}, Current status [{asset.Status}]");
             Console.WriteLine("********************************");
         }
     }
@@ -111,6 +114,29 @@ public class AssetDialog(IAssetService assetService) : IAssetDialog
         else
         {
             Console.WriteLine($"Failed to remove asset: {response.Message}");
+        }
+
+        ContinuePrompt();
+    }
+
+    private void ShowChangeStatusDialog()
+    {
+        Console.Clear();
+        Console.WriteLine("*** Change Asset Status ***");
+        ShowAllAssetsDialog("Current Assets");
+
+        Console.Write("Input Asset Serial Number (ABC-123) to change status:");
+        var serialNumber = Console.ReadLine();
+
+        var response = assetService.ChangeAssetStatus(new ChangeAssetStatusRequest(serialNumber!));
+
+        if (response.Success)
+        {
+            Console.WriteLine($"Asset {response.Asset?.SerialNumber} status changed successfully to {response.Asset?.Status}.");
+        }
+        else
+        {
+            Console.WriteLine($"Failed to change asset status: {response.Message}");
         }
 
         ContinuePrompt();

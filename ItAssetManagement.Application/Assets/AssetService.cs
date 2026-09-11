@@ -45,6 +45,10 @@ public class AssetService(IAssetRepository assetRepository) : IAssetService
     public RemoveAssetResponse RemoveAsset(RemoveAssetRequest request)
     {
         var getAllResponse = GetAllAssets();
+        if (getAllResponse.Assets == null)
+        {
+            return new RemoveAssetResponse(false, null, "Failed to retrieve assets.");
+        }
         var assetToRemove = getAllResponse.Assets.FirstOrDefault(a => a.SerialNumber.Value == request.SerialNumber);
         var success = assetRepository.Remove(request.SerialNumber);
         if (!success)
@@ -53,5 +57,33 @@ public class AssetService(IAssetRepository assetRepository) : IAssetService
         }
 
         return new RemoveAssetResponse(true, assetToRemove, null);
+    }
+
+    public ChangeAssetStatusResponse ChangeAssetStatus(ChangeAssetStatusRequest request)
+    {
+        var getAllResponse = GetAllAssets();
+
+
+        if (!getAllResponse.Success)
+        {
+            return new ChangeAssetStatusResponse(false, null, "Failed to retrieve assets.");
+        }
+
+        var assetToRetire = getAllResponse.Assets.FirstOrDefault(a => a.SerialNumber.Value == request.SerialNumber);
+
+        if (assetToRetire != null)
+        {
+            try
+            {
+                assetToRetire.Retire();
+                return new ChangeAssetStatusResponse(true, assetToRetire, null);
+            }
+            catch (Exception)
+            {
+                return new ChangeAssetStatusResponse(false, assetToRetire, "Failed to retire asset.");
+            }
+
+        }
+        return new ChangeAssetStatusResponse(false, assetToRetire, "Failed to retire asset.");
     }
 }
