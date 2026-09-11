@@ -2,7 +2,7 @@
 
 namespace ItAssetManagement.Domain.Assets;
 
-internal class Asset
+public class Asset
 {
     public Guid AssetId { get; private set; }
     [MinLength(3)]
