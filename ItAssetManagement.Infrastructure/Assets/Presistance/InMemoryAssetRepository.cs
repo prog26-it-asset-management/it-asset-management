@@ -2,7 +2,7 @@
 
 namespace ItAssetManagement.Infrastructure.Assets.Presistance;
 
-internal class InMemoryAssetRepository : IAssetRepository
+public class InMemoryAssetRepository : IAssetRepository
 {
     private readonly List<Asset> _assets = [];
 
@@ -17,9 +17,9 @@ internal class InMemoryAssetRepository : IAssetRepository
         return _assets;
     }
 
-    public bool Remove(Guid assetId)
+    public bool Remove(string serialNumber)
     {
-        var asset = _assets.FirstOrDefault(a => a.AssetId == assetId);
+        var asset = _assets.FirstOrDefault(a => a.SerialNumber.Value == serialNumber);
         if (asset == null)
         {
             return false;

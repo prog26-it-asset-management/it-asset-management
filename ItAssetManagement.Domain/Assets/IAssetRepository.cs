@@ -6,5 +6,5 @@ public interface IAssetRepository
 {
     bool Add(Asset asset);
     IEnumerable<Asset> GetAllAssets();
-    bool Remove(Guid assetId);
+    bool Remove(string serialNumber);
 }

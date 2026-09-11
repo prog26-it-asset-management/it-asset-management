@@ -4,19 +4,31 @@ using ItAssetManagement.Infrastructure.Assets.Presistance;
 
 namespace ItAssetManagement.Application.Assets;
 
-internal class AssetService(IAssetRepository assetRepository) : IAssetService
+public class AssetService(IAssetRepository assetRepository) : IAssetService
 {
     public AddAssetResponse AddAsset(AddAssetRequest request)
     {
-        var asset = new Asset(request.AssetName);
-
-        if (asset == null)
+        try
         {
-            return new AddAssetResponse(false, null, "Failed to create asset.");
+
+            var asset = new Asset(request.AssetName);
+
+            if (asset == null)
+            {
+                return new AddAssetResponse(false, null, "Failed to create asset.");
+            }
+
+            var response = new AddAssetResponse(true, asset, null);
+            assetRepository.Add(asset);
+            return response;
         }
 
-        var response = new AddAssetResponse(true, asset, null);
-        return response;
+        catch (Exception ex)
+        {
+
+            return new AddAssetResponse(false, null, ex.Message);
+        }
+
     }
 
     public GetAllAssetsResponse GetAllAssets()
@@ -32,12 +44,14 @@ internal class AssetService(IAssetRepository assetRepository) : IAssetService
 
     public RemoveAssetResponse RemoveAsset(RemoveAssetRequest request)
     {
-        var success = assetRepository.Remove(request.AssetId);
+        var getAllResponse = GetAllAssets();
+        var assetToRemove = getAllResponse.Assets.FirstOrDefault(a => a.SerialNumber.Value == request.SerialNumber);
+        var success = assetRepository.Remove(request.SerialNumber);
         if (!success)
         {
-            return new RemoveAssetResponse(false, "No asset found with provided Id.");
+            return new RemoveAssetResponse(false, assetToRemove, "No asset found with provided Serial Number.");
         }
 
-        return new RemoveAssetResponse(true, null);
+        return new RemoveAssetResponse(true, assetToRemove, null);
     }
 }

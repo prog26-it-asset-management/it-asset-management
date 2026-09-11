@@ -3,7 +3,7 @@ using ItAssetManagement.Application.Assets.Dtos;
 
 namespace ItAssetManagement.Presentation.Assets;
 
-internal class AssetDialog(IAssetService assetService) : IAssetDialog
+public class AssetDialog(IAssetService assetService) : IAssetDialog
 {
     public void ShowAssetMenu()
     {
@@ -25,7 +25,9 @@ internal class AssetDialog(IAssetService assetService) : IAssetDialog
                     ShowAddAssetDialog();
                     break;
                 case ConsoleKey.D2:
-                    ShowAllAssetsDialog();
+                    Console.Clear();
+                    ShowAllAssetsDialog("All Assets");
+                    ContinuePrompt();
                     break;
                 case ConsoleKey.D3:
                     ShowRemoveAssetDialog();
@@ -51,6 +53,7 @@ internal class AssetDialog(IAssetService assetService) : IAssetDialog
 
         if (response.Success)
         {
+            Console.Clear();
             Console.WriteLine($"Asset {assetName} added successfully.");
         }
         else
@@ -61,10 +64,9 @@ internal class AssetDialog(IAssetService assetService) : IAssetDialog
         ContinuePrompt();
     }
 
-    private void ShowAllAssetsDialog()
+    private void ShowAllAssetsDialog(string title)
     {
-        Console.Clear();
-        Console.WriteLine("*** All Assets ***");
+        Console.WriteLine($"*** {title} ***");
 
         var response = assetService.GetAllAssets();
 
@@ -85,18 +87,17 @@ internal class AssetDialog(IAssetService assetService) : IAssetDialog
         foreach (var asset in response.Assets)
         {
             if (asset == null) continue;
-            Console.WriteLine("********************************");
             Console.WriteLine($"Asset ID: {asset.SerialNumber}, Asset Name: {asset.AssetName}, Current status {asset.Status}");
             Console.WriteLine("********************************");
         }
-
-        ContinuePrompt();
     }
 
     private void ShowRemoveAssetDialog()
     {
         Console.Clear();
         Console.WriteLine("*** Remove Asset ***");
+        ShowAllAssetsDialog("Current Assets");
+
         Console.Write("Input Asset Serial Number (ABC-123) to remove:");
         var serialNumber = Console.ReadLine();
 
