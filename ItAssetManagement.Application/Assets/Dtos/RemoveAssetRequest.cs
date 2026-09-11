@@ -2,5 +2,5 @@
 
 public record RemoveAssetRequest
 (
-    Guid AssetId
+    string SerialNumber
 );
