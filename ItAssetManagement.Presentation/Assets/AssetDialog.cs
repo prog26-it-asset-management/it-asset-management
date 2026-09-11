@@ -3,7 +3,7 @@ using ItAssetManagement.Application.Assets.Dtos;
 
 namespace ItAssetManagement.Presentation.Assets;
 
-internal class AssetDialog(IAssetService assetService)
+internal class AssetDialog(IAssetService assetService) : IAssetDialog
 {
     public void ShowAssetMenu()
     {
@@ -39,7 +39,7 @@ internal class AssetDialog(IAssetService assetService)
 
         }
     }
-    public void ShowAddAssetDialog()
+    private void ShowAddAssetDialog()
     {
         Console.Clear();
         Console.WriteLine("*** Add Asset ***");
@@ -65,7 +65,7 @@ internal class AssetDialog(IAssetService assetService)
     {
         Console.Clear();
         Console.WriteLine("*** All Assets ***");
-        
+
         var response = assetService.GetAllAssets();
 
         if (!response.Success)
