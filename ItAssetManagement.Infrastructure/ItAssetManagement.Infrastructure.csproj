@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ItAssetManagement.Domain\ItAssetManagement.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Locations\" />
-  </ItemGroup>
-
 </Project>
