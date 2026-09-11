@@ -3,6 +3,6 @@
 public record RemoveAssetResponse
 (
     bool Success,
-    string Message
+    string? Message
 );
 

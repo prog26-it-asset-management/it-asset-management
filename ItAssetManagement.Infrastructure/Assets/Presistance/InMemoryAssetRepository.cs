@@ -12,7 +12,7 @@ internal class InMemoryAssetRepository : IAssetRepository
         return true;
     }
 
-    public IEnumerable<Asset> GetAll()
+    public IEnumerable<Asset> GetAllAssets()
     {
         return _assets;
     }

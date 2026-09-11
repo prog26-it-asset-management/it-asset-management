@@ -2,9 +2,9 @@
 
 namespace ItAssetManagement.Application.Assets.Dtos;
 
-public record GetAssetResponse
+public record AddAssetResponse
 (
     bool Success,
-    Asset Asset,
-    string Message
+    Asset? Asset,
+    string? Message
 );

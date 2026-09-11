@@ -1,4 +1,4 @@
 ﻿namespace ItAssetManagement.Application.Assets.Dtos;
 
-public record AddItemRequest
+public record AddAssetRequest
 (string AssetName);
