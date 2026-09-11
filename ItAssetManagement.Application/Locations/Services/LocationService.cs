@@ -23,9 +23,3 @@ public class LocationService(ILocationRepository locationRepository) : ILocation
         return locationRepository.GetLocations();
     }
 }
-public interface ILocationService
-{
-    public CreateLocationResult CreateLocation (CreateLocationRequest request);
-
-    public IReadOnlyList<Location> GetAllLocations();
-}
