@@ -12,4 +12,8 @@
     <ProjectReference Include="..\ItAssetManagement.Infrastructure\ItAssetManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Locations\" />
+  </ItemGroup>
+
 </Project>
