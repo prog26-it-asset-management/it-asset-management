@@ -1,6 +1,6 @@
 ﻿namespace ItAssetManagement.Application.Assets.Dtos;
 
-internal record RemoveAssetRequest
+public record RemoveAssetRequest
 (
     Guid AssetId
 );

@@ -1,6 +1,6 @@
 ﻿namespace ItAssetManagement.Application.Assets.Dtos;
 
-internal record RemoveAssetResponse
+public record RemoveAssetResponse
 (
     bool Success,
     string Message

@@ -2,7 +2,7 @@
 
 namespace ItAssetManagement.Application.Assets.Dtos;
 
-internal record GetAllAssetsResponse
+public record GetAllAssetsResponse
 (
     bool Success,
     IEnumerable<Asset> Assets,
