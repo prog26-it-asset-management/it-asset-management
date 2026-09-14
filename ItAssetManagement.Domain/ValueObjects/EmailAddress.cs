@@ -1,4 +1,6 @@
-﻿namespace ItAssetManagement.Domain.ValueObjects;
+﻿using System.Net.Mail;
+
+namespace ItAssetManagement.Domain.ValueObjects;
 
 public record EmailAddress
 {

@@ -14,10 +14,10 @@ internal class LocationDialog(ILocationService locationService) : ILocationDialo
 
         var request = new CreateLocationRequest(name, code);
 
-        var location = locationService.CreateLocation(request);
+        var result = locationService.CreateLocation(request);
 
-        if (location is not null)
-            Console.WriteLine($"Customer '{location.Location.LocationName}' with id '{location.Location.LocationId}' was created!");
+        if (result is not null)
+            Console.WriteLine($"Location '{result.Location.LocationName}' with id '{result.Location.LocationId}' was created!");
         else
             Console.WriteLine($"Unable to create new location");
 

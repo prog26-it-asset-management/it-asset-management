@@ -5,6 +5,6 @@ namespace ItAssetManagement.Application.Assets.Dtos;
 public record GetAllAssetsResponse
 (
     bool Success,
-    IEnumerable<Asset?> Assets,
+    IEnumerable<Asset> Assets,
     string? Message
 );
