@@ -1,6 +1,6 @@
 ﻿namespace ItAssetManagement.Presentation.Assets
 {
-    internal interface IAssetDialog
+    public interface IAssetDialog
     {
         void ShowAssetMenu();
     }

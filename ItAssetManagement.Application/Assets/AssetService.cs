@@ -36,7 +36,7 @@ public class AssetService(IAssetRepository assetRepository) : IAssetService
         var assets = assetRepository.GetAllAssets();
         if (assets == null)
         {
-            return new GetAllAssetsResponse(false, null, "Failed to retrieve assets.");
+            return new GetAllAssetsResponse(false, [], "Failed to retrieve assets.");
         }
 
         return new GetAllAssetsResponse(true, assets, null);
